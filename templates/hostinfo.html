@@ -1,0 +1,35 @@
+{% extends 'master.html' %}
+{% block title %}主机管理{% endblock %}
+{% block content1 %}
+    <input type="button" value="增加"/>
+    <table border="1">
+    <thread>
+        <tr >
+            <td>序号</td>
+            <td>环境标识</td>
+            <td>环境地址</td>
+            <td>环境端口</td>
+            <td>环境用户名</td>
+            <td>环境密码</td>
+            <td>环境测试项目</td>
+            <td>环境测试版本</td>
+            <td>操作</td>
+        </tr>
+    </thread>
+        <tbody>
+        {% for row in hostobj %}
+        <tr hid="{{ row.id }}" iid="{{ row.item.id }}">
+            <td>{{ forloop.counter }}</td>
+            <td>{{ row.envid }}</td>
+            <td>{{ row.ip }}</td>
+            <td>{{ row.port }}</td>
+            <td>{{ row.username }}</td>
+            <td>{{ row.password }}</td>
+            <td>{{ row.item.item }}</td>
+            <td>{{ row.item.versionNum }}</td>
+            <td><span>编辑</span>|<span>删除</span></td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

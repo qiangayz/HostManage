@@ -1,0 +1,61 @@
+{% extends 'master.html' %}
+
+{% block title %}用户管理{% endblock %}
+
+{% block content1 %}
+{#<h1>对象方式获取的.all()</h1>#}
+<div><input type="button" value="增加"/></div>
+<table class="usertype" border="1">
+    <thread>
+        <tr>
+            <th>id</th>
+            <th>用户类型</th>
+            <th>操作</th>
+        </tr>
+    </thread>
+    <tbody>
+    {% for row in UserType_data %}
+    <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.caption }}</td>
+        <td><span>编辑</span>|<span>删除</span></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{#<h1>字典方式获取的.all().values</h1>#}
+{#<table class="usertype" border="1">#}
+{#    <thread>#}
+{#        <tr>#}
+{#            <th>id</th>#}
+{#            <th>用户类型</th>#}
+{#        </tr>#}
+{#    </thread>#}
+{#    <tbody>#}
+{#    {% for row in data1 %}#}
+{#    <tr>#}
+{#        <td>{{ row.id }}</td>#}
+{#        <td>{{ row.caption }}</td>#}
+{#    </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+{#<h1>元组方式获取的.all().values_list()</h1>#}
+{#<table class="usertype" border="1">#}
+{#    <thread>#}
+{#        <tr>#}
+{#            <th>id</th>#}
+{#            <th>用户类型</th>#}
+{#            <th>操作</th>#}
+{#        </tr>#}
+{#    </thread>#}
+{#    <tbody>#}
+{#    {% for row in data2 %}#}
+{#    <tr>#}
+{#        <td>{{ row.0 }}</td>#}
+{#        <td>{{ row.1 }}</td>#}
+{#    </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'master.html' %}
+{% block title %}测试项目管理{% endblock %}
+{% block content1 %}
+    <input type="button" value="增加"/>
+    <table border="1" class="usertype">
+    <thread>
+        <tr>
+            <td>id</td>
+            <td>测试项目</td>
+            <td>当前版本</td>
+            <td>操作</td>
+        </tr>
+    </thread>
+    <tbody>
+    {% for row in test_item_data %}
+        <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.item }}</td>
+        <td>{{ row.versionNum }}</td>
+            <td><span>编辑</span>|<span>删除</span></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}
