@@ -24,5 +24,8 @@ urlpatterns = [
     url(r'^hostinfo', views.hostinfo),
     url(r'^testitem', views.test_item),
     url(r'^business', views.usertype),
+    url(r'^test_ajax$', views.test_ajax),
+    url(r'^test_ajax1', views.test_ajax1),
+    url(r'^edit_data-(\d+)', views.edit_data),
     url(r'^index', views.index),
 ]

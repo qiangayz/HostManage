@@ -5,6 +5,7 @@
     <table border="1">
     <thread>
         <tr >
+            <td>序号</td>
             <td>姓名</td>
             <td>年龄</td>
             <td>用户类型</td>
@@ -14,6 +15,7 @@
         <tbody>
         {% for row in userinfo %}
         <tr userid="{{ row.id }}" capid="{{ row.user_type.id }}">
+            <td>{{ forloop.counter }}</td>
             <td>{{ row.name }}</td>
             <td>{{ row.age }}</td>
             <td>{{ row.user_type.caption }}</td>

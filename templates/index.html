@@ -89,6 +89,9 @@
             background-color: dodgerblue;
             color: black;
         }
+        .edit{
+            background-color: lawngreen;
+        }
     </style>
 </head>
 <body style="margin: 0">
@@ -129,6 +132,57 @@
         });
         $('.cancel').click(function () {
          $('.shade,.add-modal').addClass('hide');
+        });
+        $('#ajaxcommit').click(function () {
+            $.ajax({
+                url:"/hostApp/test_ajax",
+                type:"POST",
+                data:{'hostname':$('#envinfo').val(),
+                       "ip":$("#ipinfo").val(),
+                       "port":$("#portinfo").val(),
+                       "usernameinfo":$("#usernameinfo").val(),
+                       "passwordinfo":$("#passwordinfo").val(),
+                       "iteminfo":$("#iteminfo").val(),
+                },
+                success:function (data) {
+                    var dict = JSON.parse(data);
+                    if(dict.status){
+                        location.reload()
+                    }else {
+                        $('#error_msg').text(dict.error)
+                    }
+                }
+                })
+        });
+        $("span[delid='delitem']").click(function () {
+            var hid =$(this).parent().parent().attr('hid');
+            $(this).parent().parent().remove();
+            $.ajax(
+                {
+                    url: "/hostApp/test_ajax1",
+                    type: "POST",
+{#                    data: $('#add_form').serialize(),#}
+                    data: {
+                        'tablename': 'host',
+                        'hid': hid
+                    },
+                    success: function (data) {
+                        var dict = JSON.parse(data);
+                        if (dict.status) {
+                            alert('删除成功')
+                        }
+                        {#                        location.reload()#}
+                        {#                    }else {#}
+                        {#                        $('#error_msg').text(dict.error)#}
+                        {#                    }#}
+                    },
+                }
+            )
+        });
+        $(".edit").click(function () {
+            var hid =$(this).parent().parent().attr('hid');
+            var str="/hostApp/edit_data-"+hid;
+            location.href=str
         })
         })
     </script>

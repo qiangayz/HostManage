@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        input{
+            display: inline-block;
+            height: 30px;
+            width: 200px;
+            font-size: 18px;
+        }
+        select{
+            display: inline-block;
+            height: 30px;
+            width: 200px;
+            font-size: 18px;
+        }
+        .editdemo{
+            width: 500px;
+            margin: 0 auto;
+            background-color: lightskyblue;
+        }
+    </style>
+</head>
+<body>
+<div class="editdemo">
+<form action="/hostApp/edit_data-{{ data.id }}" method="POST">
+<h3>环境信息</h3>
+    <input type="text" value="{{ data.envid }}" name="envid"/>
+<h3>ip</h3>
+    <input type="text" value="{{ data.ip }}" name="ip"/>
+<h3>端口</h3>
+    <input type="text" value="{{ data.port }}" name="port"/>
+<h3>用户</h3>
+    <input type="text" value="{{ data.username }}" name="username"/>
+<h3>密码</h3>
+    <input type="text" value="{{ data.password }}" name="password"/>
+<h3>业务</h3>
+    <select name="iteminfo">
+        {% for row in data1 %}
+            <option value="{{ row.id }}">{{ row.item }}</option>
+        {% endfor %}
+    </select>
+<br/>
+<br/>
+    <div><input type="submit" value="确认修改"></div>
+</form>
+</div>
+</body>
+</html>

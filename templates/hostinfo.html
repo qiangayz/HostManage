@@ -1,7 +1,7 @@
 {% extends 'master.html' %}
 {% block title %}主机管理{% endblock %}
 {% block content1 %}
-    <input type="button" value="增加"/>
+    <input class="adddata" type="button" value="增加"/>
     <table border="1">
     <thread>
         <tr >
@@ -27,9 +27,25 @@
             <td>{{ row.password }}</td>
             <td>{{ row.item.item }}</td>
             <td>{{ row.item.versionNum }}</td>
-            <td><span>编辑</span>|<span>删除</span></td>
+            <td><span class="edit">编辑</span>|<span delid="delitem" >删除</span></td>
             {% endfor %}
         </tr>
         </tbody>
     </table>
+    <div class="add-modal hide">
+        <form action="/hostApp/host/">
+            <div><input id="envinfo" type="text" name="envinfo" placeholder="环境信息"> </div>
+            <div><input id="ipinfo" type="text" name="ipinfo" placeholder="ip"> </div>
+            <div><input id="portinfo" type="text" name="portinfo" placeholder="端口"> </div>
+            <div><input id="usernameinfo" type="text" name="usernameinfo" placeholder="用户名"> </div>
+            <div><input id="passwordinfo" type="password" name="passwordinfo" placeholder="密码"> </div>
+            <div><select id="iteminfo"  name="iteminfo">
+                {% for row in test_item_data %}
+                    <option value="{{ row.id }}">{{ row.item }}</option>
+                {% endfor %}
+            </select> </div>
+            <div><input id="ajaxcommit" type="button"value="ajax提交"> <input type="button" class="cancel" value="取消"></div>
+            <div id="error_msg" style="color: red"></div>
+        </form>
+    </div>
 {% endblock %}
