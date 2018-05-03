@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.conf.urls import include
+from django.shortcuts import redirect
 from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # url(r'^$','django.shortcuts.redirect',
+    #     '/hostApp/index/'),
     url(r'^hostApp/',include('hostApp.urls')),
 ]

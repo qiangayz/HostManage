@@ -82,6 +82,9 @@ def test_ajax1(request):
         hid = request.POST.get('hid')
         models.Host.objects.filter(id=hid).delete()
 
+    if request.POST.get('tablename')=='application':
+        appid = request.POST.get('appid')
+        models.Application.objects.filter(id=appid).delete()
     return HttpResponse(json.dumps(result))
 
 def edit_data(request,hid):
@@ -107,13 +110,24 @@ def edit_data(request,hid):
         obj.update(envid=envid,ip=ipinfo,port=portinfo,username=usernameinfo,password=passinfo,item_id=item)
         return  redirect('/hostApp/index')
 
+def many_to_many(request):
+    print request.POST
+    appname=request.POST.get('appname')
+    hostlist= request.POST.getlist('hostlist')
+    print appname,hostlist
+    obj=models.Application.objects.create(name=appname)
+    obj.r.add(*hostlist)
+    return  HttpResponse('123123123')
+
 def index(request):
     hostobj = models.Host.objects.all()
     UserType_data = models.UserType.objects.all()
     test_item_data = models.TestItem.objects.all()
     userinfo = models.User.objects.all()
+    appinfo = models.Application.objects.all()
     return render(request,'index.html',{'UserType_data':UserType_data,
                                         'test_item_data':test_item_data,
                                         'hostobj':hostobj,
                                         'userinfo':userinfo,
+                                        'appinfo':appinfo
                                         })

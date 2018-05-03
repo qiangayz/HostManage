@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.css">
     <style>
         .head{
             width: 100%;
@@ -92,6 +94,15 @@
         .edit{
             background-color: lawngreen;
         }
+        .manyspan{
+            border: 1px solid red;
+        }
+        .appdel{
+            border: 1px;
+        }
+        .appedit{
+            border: 1px;
+        }
     </style>
 </head>
 <body style="margin: 0">
@@ -101,6 +112,7 @@
     <div con="con2" class="menu1">用户类型</div>
     <div con="con1" class="menu1">主机类型</div>
     <div con="con4" class="menu1">测试项目</div>
+    <div con="con5" class="menu1">主机多对多</div>
 </div>
 <div >
 <div id="con1" class="content">
@@ -115,9 +127,13 @@
 <div id="con4" class="content hide">
 {% include 'testitem.html' %}
 </div>
+    <div id="con5" class="content hide">
+{% include 'manyToMany.html' %}
+</div>
 </div>
 <div class="shade hide"></div>
 <script src="/static/jquery.js"></script>
+<script src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script>
     $(function () {
 
@@ -183,6 +199,59 @@
             var hid =$(this).parent().parent().attr('hid');
             var str="/hostApp/edit_data-"+hid;
             location.href=str
+        });
+        $('#appinfocommit').click(function () {
+            $.ajax({
+                url:'/hostApp/many_to_many',
+                type:'POST',
+                data:$('#appaddform').serialize(),
+                dataType: 'JSON', // 内部
+                traditional: true,
+                success:function (obj) {
+                      alert('success');
+                      location.reload()
+                }
+            })
+        });
+        $('.appdel').click(function () {
+            var appid =$(this).parent().parent().attr('appid');
+            $(this).parent().parent().remove();
+            $.ajax(
+                {
+                    url: "/hostApp/test_ajax1",
+                    type: "POST",
+{#                    data: $('#add_form').serialize(),#}
+                    data: {
+                        'tablename': 'application',
+                        'appid': appid
+                    },
+                    success: function (data) {
+                        var dict = JSON.parse(data);
+                        if (dict.status) {
+                            alert('删除成功')
+                        }
+                        {#                        location.reload()#}
+                        {#                    }else {#}
+                        {#                        $('#error_msg').text(dict.error)#}
+                        {#                    }#}
+                    },
+                }
+            )
+        });
+        $('.appedit').click(function () {
+            $('.shade,.add-modal').removeClass('hide');
+            var appname = $(this).parent().prev().prev().text();
+            $('#appname').val(appname);
+            var host_list_id=[];
+            $(this).parent().prev().children().each(
+                function () {
+                    var hostid = $(this).attr('hostid');
+                    host_list_id.push(hostid)
+                }
+            );
+            console.log(host_list_id);
+            $('#hostlist').val(host_list_id)
+
         })
         })
     </script>

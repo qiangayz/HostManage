@@ -1,0 +1,38 @@
+<input class="adddata" type="button" value="增加"/>
+    <table border="1">
+    <thread>
+        <tr>
+            <td>业务名称</td>
+            <td>主机列表</td>
+            <td>操作</td>
+        </tr>
+    </thread>
+    <tbody>
+    {% for row in appinfo %}
+    <tr appid="{{ row.id }}">
+        <td>
+            {{ row.name }}
+        </td>
+    <td>
+        {% for cow in row.r.all %}
+            <span hostid="{{ cow.id }}" class="manyspan">{{ cow.envid}}<a class="fa fa-times"></a></span>
+        {% endfor %}
+    </td>
+    <td><span class="appedit">编辑</span>|<span class="appdel">删除</span></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+<div class="add-modal hide">
+        <form id="appaddform" action="/hostApp/many_to_many/">
+            <div><input id="appname" type="text" name="appname" placeholder="业务名称"> </div>
+            <div><select id="hostlist"  name="hostlist" multiple>
+                {% for row in hostobj %}
+                    <option value="{{ row.id }}">{{ row.envid }}</option>
+                {% endfor %}
+            </select> </div>
+            <div><input id="appinfocommit" type="button" value="ajax提交">
+                <input type="button" class="cancel" value="取消"></div>
+            <div id="error_msg" style="color: red"></div>
+        </form>
+    </div>

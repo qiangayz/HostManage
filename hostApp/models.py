@@ -33,3 +33,7 @@ class Host(models.Model):
 class TestItem(models.Model):
     item = models.CharField(max_length=32)
     versionNum = models.CharField(max_length=32)
+
+class Application(models.Model):
+    name = models.CharField(max_length=32)
+    r =models.ManyToManyField('Host')
