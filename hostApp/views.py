@@ -54,7 +54,7 @@ def test_ajax(request):
         username=request.POST.get('usernameinfo')
         password=request.POST.get('passwordinfo')
         item=request.POST.get('iteminfo')
-        if host and len(host)>5:
+        if host and len(host)>1:
             models.Host.objects.create(
                 envid=host,
                 ip=ipinfo,
@@ -111,12 +111,23 @@ def edit_data(request,hid):
         return  redirect('/hostApp/index')
 
 def many_to_many(request):
+    print '这里是后台增加函数'
     print request.POST
     appname=request.POST.get('appname')
     hostlist= request.POST.getlist('hostlist')
     print appname,hostlist
     obj=models.Application.objects.create(name=appname)
     obj.r.add(*hostlist)
+    return  HttpResponse('123123123')
+
+def many_to_many_edit(request):
+    print '这里是后台修改函数'
+    appid=request.POST.get('appid')
+    appname=request.POST.get('appname')
+    hostlist= request.POST.getlist('hostlist')
+    print appid,appname,hostlist
+    obj=models.Application.objects.filter(id=appid).first()
+    obj.r.set(hostlist)
     return  HttpResponse('123123123')
 
 def index(request):

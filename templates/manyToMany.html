@@ -3,7 +3,7 @@
     <thread>
         <tr>
             <td>业务名称</td>
-            <td>主机列表</td>
+            <td style="width: 400px">主机列表</td>
             <td>操作</td>
         </tr>
     </thread>
@@ -23,7 +23,7 @@
     {% endfor %}
     </tbody>
     </table>
-<div class="add-modal hide">
+<div style="z-index: 100" class="add-modal hide">
         <form id="appaddform" action="/hostApp/many_to_many/">
             <div><input id="appname" type="text" name="appname" placeholder="业务名称"> </div>
             <div><select id="hostlist"  name="hostlist" multiple>
@@ -32,6 +32,23 @@
                 {% endfor %}
             </select> </div>
             <div><input id="appinfocommit" type="button" value="ajax提交">
+                <input type="button" class="cancel" value="取消"></div>
+            <div id="error_msg" style="color: red"></div>
+        </form>
+    </div>
+<div id='appedit' style="z-index: 99" class="add-modal hide">
+        <form id="appeditform" action="/hostApp/many_to_many/">
+            <div><input id="appid" type="text" name="appid"  class="hide"> </div>
+            <div><input id="appname_edit" type="text" name="appname" placeholder="业务名称"> </div>
+            <div><select id="hostlist_edit"  name="hostlist" multiple>
+                {% for row in hostobj %}
+                    <option value="{{ row.id }}">{{ row.envid }}</option>
+                {% endfor %}
+            </select> </div>
+        <br/>
+        <br/>
+        <br/>
+            <div><input id="appinfoedit" type="button" value="保存更改">
                 <input type="button" class="cancel" value="取消"></div>
             <div id="error_msg" style="color: red"></div>
         </form>
