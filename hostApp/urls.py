@@ -30,4 +30,5 @@ urlpatterns = [
     url(r'^test_ajax1', views.test_ajax1),
     url(r'^edit_data-(\d+)', views.edit_data),
     url(r'^index', views.index),
+    url(r'^login', views.login),
 ]

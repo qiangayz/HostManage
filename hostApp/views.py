@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import HttpResponse
 from hostApp import models
+from utils.cookieresign import auth
 
 # Create your views here.
 def usertype(request):
@@ -130,7 +131,9 @@ def many_to_many_edit(request):
     obj.r.set(hostlist)
     return  HttpResponse('123123123')
 
+@auth
 def index(request):
+    print request.COOKIES
     hostobj = models.Host.objects.all()
     UserType_data = models.UserType.objects.all()
     test_item_data = models.TestItem.objects.all()
@@ -140,5 +143,60 @@ def index(request):
                                         'test_item_data':test_item_data,
                                         'hostobj':hostobj,
                                         'userinfo':userinfo,
-                                        'appinfo':appinfo
+                                        'appinfo':appinfo,
                                         })
+USERINFO={
+    'root':{'password':'root123'},
+    'zte':{'password':'zte'}
+}
+def login(request):
+    print request
+    print '----------------------------'
+    print request.META
+    print '----------------------------'
+    print request.body
+    if request.method == "GET":
+        response =  render(request,'login.html',{'name':'ASDFSDGS'})
+        response['name']='zq'
+        return  response
+    if request.method == "POST":
+        u = request.POST.get('username')
+        p = request.POST.get('password')
+        dic = USERINFO.get(u)
+        if not dic:
+            return render(request, 'login.html', {'name': '用户不存在'})
+        if dic['password'] == p:
+            res = redirect('/hostApp/index/')
+            res.set_cookie('username',u)
+            res.set_cookie('password',p)
+            return res
+        else:
+            return render(request, 'login.html', {'name': 'ASDFSDGS'})
+
+def cookie(request):
+    #
+    # request.COOKIES
+    # request.COOKIES['username111']
+    request.COOKIES.get('username111')
+
+    response = render(request,'index.html')
+    response = redirect('/index/')
+    # 设置cookie，关闭浏览器失效
+    response.set_cookie('key',"value")
+    # 设置cookie, N秒只有失效
+    response.set_cookie('username111',"value",max_age=10)
+    # 设置cookie, 截止时间失效
+    import datetime
+    current_date = datetime.datetime.utcnow()
+    current_date = current_date + datetime.timedelta(seconds=5)
+    response.set_cookie('username111',"value",expires=current_date)
+    response.set_cookie('username111',"value",max_age=10)
+
+    # request.COOKIES.get('...')
+    # response.set_cookie(...)
+    obj = HttpResponse('s')
+    #加密COOKIES
+    obj.set_signed_cookie('username',"kangbazi",salt="asdfasdf")
+    request.get_signed_cookie('username',salt="asdfasdf")
+
+    return response

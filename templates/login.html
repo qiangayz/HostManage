@@ -1,0 +1,22 @@
+{% load demo %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="margin: 50px auto ;width: 300px ">
+
+    <form action="/hostApp/login/" method="POST">
+    <div><input type="text" name="username" placeholder="用户名"> </div>
+    <div><input type="password" name="password" placeholder="密码"> </div>
+    <div><input type="submit" value="登录"> </div>
+        </form>
+</div>
+        {{ name }}
+        {{ name|lower }}
+      {% fun1 1 2 3 %}
+      {{ '123'|fun2:'213' }}
+</body>
+</html>
